@@ -216,6 +216,34 @@ namespace Sakura.MathLib
 				m.M31 * oos, m.M32 * oos, m.M33 * oos);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix3x3d Translate(double x, double y)
+			=> new Matrix3x3d(1, 0, x, 0, 1, y, 0, 0, 1);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix3x3d FlipHorz()
+			=> new Matrix3x3d(-1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix3x3d FlipVert()
+			=> new Matrix3x3d(1, 0, 0, 0, -1, 0, 0, 0, 1);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix3x3d Scale(double x, double y, double z)
+			=> new Matrix3x3d(x, 0, 0, 0, y, 0, 0, 0, z);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix3x3d Shear(double x, double y)
+			=> new Matrix3x3d(1, x, 0, y, 1, 0, 0, 0, 1);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix3x3d Rotate(double angleInRadians)
+		{
+			double s = Math.Sin(angleInRadians);
+			double c = Math.Cos(angleInRadians);
+			return new Matrix3x3d(c, -s, 0, s, c, 0, 0, 0, 1);
+		}
+
 		public Matrix3x3d Invert()
 		{
 			double det = Determinant;

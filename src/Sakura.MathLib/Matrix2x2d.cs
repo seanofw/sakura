@@ -127,8 +127,20 @@ namespace Sakura.MathLib
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix2x2d FlipHorz()
+			=> new Matrix2x2d(-1, 0, 0, 1);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix2x2d FlipVert()
+			=> new Matrix2x2d(1, 0, 0, -1);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Matrix2x2d Scale(double x, double y)
 			=> new Matrix2x2d(x, 0, 0, y);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix2x2d Shear(double x, double y)
+			=> new Matrix2x2d(1, x, y, 1);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Matrix2x2d Rotate(double angleInRadians)

@@ -173,8 +173,20 @@ namespace Sakura.MathLib
 			=> new Matrix3x2f(1, 0, x, 0, 1, y);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix3x2f FlipHorz()
+			=> new Matrix3x2f(-1, 0, 0, 0, 1, 0);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix3x2f FlipVert()
+			=> new Matrix3x2f(1, 0, 0, 0, -1, 0);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Matrix3x2f Scale(float x, float y)
 			=> new Matrix3x2f(x, 0, 0, 0, y, 0);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Matrix3x2f Shear(float x, float y)
+			=> new Matrix3x2f(1, x, 0, y, 1, 0);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Matrix3x2f Rotate(float angleInRadians)
