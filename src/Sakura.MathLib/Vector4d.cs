@@ -27,6 +27,27 @@ namespace Sakura.MathLib
             get => X * X + Y * Y + Z * Z + W * W;
         }
 
+        public Vector3d XYZ
+		{
+            get => new Vector3d(X, Y, Z);
+            set
+			{
+                X = value.X;
+                Y = value.Y;
+                Z = value.Z;
+			}
+        }
+
+        public Vector2d XY
+        {
+            get => new Vector2d(X, Y);
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
+        }
+
         #endregion
 
         #region Static instances
@@ -47,6 +68,24 @@ namespace Sakura.MathLib
         {
             X = x;
             Y = y;
+            Z = z;
+            W = w;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector4d(Vector3d v, double w)
+        {
+            X = v.X;
+            Y = v.Y;
+            Z = v.Z;
+            W = w;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector4d(Vector2d v, double z, double w)
+        {
+            X = v.X;
+            Y = v.Y;
             Z = z;
             W = w;
         }

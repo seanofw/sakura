@@ -26,6 +26,66 @@ namespace Sakura.MathLib
             get => X * X + Y * Y + Z * Z;
         }
 
+        public Vector2f XY
+        {
+            get => new Vector2f(X, Y);
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
+        }
+
+        public Vector2f YX
+        {
+            get => new Vector2f(Y, X);
+            set
+            {
+                Y = value.X;
+                X = value.Y;
+            }
+        }
+
+        public Vector2f YZ
+        {
+            get => new Vector2f(Y, Z);
+            set
+            {
+                Y = value.X;
+                Z = value.Y;
+            }
+        }
+
+        public Vector2f ZY
+        {
+            get => new Vector2f(Z, Y);
+            set
+            {
+                Z = value.X;
+                Y = value.Y;
+            }
+        }
+
+        public Vector2f XZ
+        {
+            get => new Vector2f(X, Z);
+            set
+            {
+                X = value.X;
+                Z = value.Y;
+            }
+        }
+
+        public Vector2f ZX
+        {
+            get => new Vector2f(Z, X);
+            set
+            {
+                Z = value.X;
+                X = value.Y;
+            }
+        }
+
         #endregion
 
         #region Static instances
@@ -45,6 +105,14 @@ namespace Sakura.MathLib
         {
             X = x;
             Y = y;
+            Z = z;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector3f(Vector2f v, float z)
+        {
+            X = v.X;
+            Y = v.Y;
             Z = z;
         }
 

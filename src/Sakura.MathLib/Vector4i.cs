@@ -33,6 +33,27 @@ namespace Sakura.MathLib
             get => (float)((double)X * X + (double)Y * Y + (double)Z * Z + (double)W * W);
         }
 
+        public Vector3i XYZ
+        {
+            get => new Vector3i(X, Y, Z);
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+                Z = value.Z;
+            }
+        }
+
+        public Vector2i XY
+        {
+            get => new Vector2i(X, Y);
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
+        }
+
         #endregion
 
         #region Static instances
@@ -53,6 +74,24 @@ namespace Sakura.MathLib
         {
             X = x;
             Y = y;
+            Z = z;
+            W = w;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector4i(Vector3i v, int w)
+        {
+            X = v.X;
+            Y = v.Y;
+            Z = v.Z;
+            W = w;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector4i(Vector2i v, int z, int w)
+        {
+            X = v.X;
+            Y = v.Y;
             Z = z;
             W = w;
         }
