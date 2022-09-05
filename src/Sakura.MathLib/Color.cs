@@ -56,8 +56,8 @@ namespace Sakura.MathLib
 		/// </summary>
 		public float Bf
 		{
-			get => G * (1f / 255);
-			set => G = (byte)Math.Min(Math.Max((int)(value * 255 + 0.5f), 0), 255);
+			get => B * (1f / 255);
+			set => B = (byte)Math.Min(Math.Max((int)(value * 255 + 0.5f), 0), 255);
 		}
 
 		/// <summary>
@@ -67,6 +67,36 @@ namespace Sakura.MathLib
 		{
 			get => A * (1f / 255);
 			set => A = (byte)Math.Min(Math.Max((int)(value * 255 + 0.5f), 0), 255);
+		}
+
+		/// <summary>
+		/// The color represented as a 4-component vector, where X=R, Y=G, Z=B, and W=A.
+		/// </summary>
+		public Vector4d Vector4d
+		{
+			get => new Vector4d(R * (1.0 / 255), G * (1.0 / 255), B * (1.0 / 255), A * (1.0 / 255));
+			set
+			{
+				R = (byte)Math.Min(Math.Max((int)(value.X * 255 + 0.5), 0), 255);
+				G = (byte)Math.Min(Math.Max((int)(value.Y * 255 + 0.5), 0), 255);
+				B = (byte)Math.Min(Math.Max((int)(value.Z * 255 + 0.5), 0), 255);
+				A = (byte)Math.Min(Math.Max((int)(value.W * 255 + 0.5), 0), 255);
+			}
+		}
+
+		/// <summary>
+		/// The color represented as a 4-component vector, where X=R, Y=G, Z=B, and W=A.
+		/// </summary>
+		public Vector4f Vector4f
+		{
+			get => new Vector4f(R * (1.0f / 255), G * (1.0f / 255), B * (1.0f / 255), A * (1.0f / 255));
+			set
+			{
+				R = (byte)Math.Min(Math.Max((int)(value.X * 255 + 0.5f), 0), 255);
+				G = (byte)Math.Min(Math.Max((int)(value.Y * 255 + 0.5f), 0), 255);
+				B = (byte)Math.Min(Math.Max((int)(value.Z * 255 + 0.5f), 0), 255);
+				A = (byte)Math.Min(Math.Max((int)(value.W * 255 + 0.5f), 0), 255);
+			}
 		}
 
 		#endregion
@@ -85,6 +115,36 @@ namespace Sakura.MathLib
 		[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
 		public Color(float r, float g, float b, float a = 1.0f)
 			: this((int)(r * 255 + 0.5f), (int)(g * 255 + 0.5f), (int)(b * 255 + 0.5f), (int)(a * 255 + 0.5f))
+		{
+		}
+
+		/// <summary>
+		/// Construct a color from a Vector4f representing X=R, Y=G, Z=B, and W=A, in the range
+		/// of [0.0f, 1.0f] each.
+		/// </summary>
+		/// <remarks>
+		/// Values outside [0.0f, 1.0f] but still in the range of [-2^23, 2^23] will be clamped
+		/// to [0.0f, 1.0f].  Values larger than 2^23 or smaller than -2^23 will produce garbage
+		/// and have undefined results.
+		/// </remarks>
+		[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+		public Color(Vector4f v)
+			: this((int)(v.X * 255 + 0.5f), (int)(v.Y * 255 + 0.5f), (int)(v.Z * 255 + 0.5f), (int)(v.W * 255 + 0.5f))
+		{
+		}
+
+		/// <summary>
+		/// Construct a color from a Vector4d representing X=R, Y=G, Z=B, and W=A, in the range
+		/// of [0.0f, 1.0f] each.
+		/// </summary>
+		/// <remarks>
+		/// Values outside [0.0f, 1.0f] but still in the range of [-2^23, 2^23] will be clamped
+		/// to [0.0f, 1.0f].  Values larger than 2^23 or smaller than -2^23 will produce garbage
+		/// and have undefined results.
+		/// </remarks>
+		[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+		public Color(Vector4d v)
+			: this((int)(v.X * 255 + 0.5), (int)(v.Y * 255 + 0.5), (int)(v.Z * 255 + 0.5), (int)(v.W * 255 + 0.5))
 		{
 		}
 

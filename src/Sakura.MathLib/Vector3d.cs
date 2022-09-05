@@ -74,7 +74,8 @@ namespace Sakura.MathLib
         public override int GetHashCode()
             => unchecked((Z.GetHashCode() * 65599 + Y.GetHashCode()) * 65599 + X.GetHashCode());
 
-        public bool NearlyEquals(Vector3i other, double epsilon = 0.00001)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool NearlyEquals(Vector3d other, double epsilon = 0.00001)
             => Math.Abs(X - other.X) < epsilon
                 && Math.Abs(Y - other.Y) < epsilon
                 && Math.Abs(Z - other.Z) < epsilon;
@@ -193,78 +194,6 @@ namespace Sakura.MathLib
 
         #endregion
 
-        #region Static methods
-
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        public static Vector3d Bezier2(Vector3d start, Vector3d c1, Vector3d end, double t)
-        {
-            double it = 1 - t;
-            double it2 = it * it;
-            double t2 = t * t;
-
-            double a = it2;
-            double b = 2 * it * t;
-            double c = t2;
-
-            double x = a * start.X + b * c1.X + c * end.X;
-            double y = a * start.Y + b * c1.Y + c * end.Y;
-            double z = a * start.Z + b * c1.Z + c * end.Z;
-
-            return new Vector3d(x, y, z);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        public static Vector3d Bezier2Deriv(Vector3d start, Vector3d c1, Vector3d end, double t)
-        {
-            double it = 1 - t;
-
-            double a = 2 * it;
-            double b = 2 * t;
-
-            double x = a * (c1.X - start.X) + b * (end.X - c1.X);
-            double y = a * (c1.Y - start.Y) + b * (end.Y - c1.Y);
-            double z = a * (c1.Z - start.Z) + b * (end.Z - c1.Z);
-
-            return new Vector3d(x, y, z);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        public static Vector3d Bezier3(Vector3d start, Vector3d c1, Vector3d c2, Vector3d end, double t)
-        {
-            double it = 1 - t;
-            double it2 = it * it;
-            double t2 = t * t;
-
-            double a = it * it2;
-            double b = 3 * it2 * t;
-            double c = 3 * it * t2;
-            double d = t2 * t;
-
-            double x = a * start.X + b * c1.X + c * c2.X + d * end.X;
-            double y = a * start.Y + b * c1.Y + c * c2.Y + d * end.Y;
-            double z = a * start.Z + b * c1.Z + c * c2.Z + d * end.Z;
-
-            return new Vector3d(x, y, z);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        public static Vector3d Bezier3Deriv(Vector3d start, Vector3d c1, Vector3d c2, Vector3d end, double t)
-        {
-            double it = 1 - t;
-
-            double a = 3 * it * it;
-            double b = 6 * it * t;
-            double c = 3 * t * t;
-
-            double x = a * (c1.X - start.X) + b * (c2.X - c1.X) + c * (end.X - c2.X);
-            double y = a * (c1.Y - start.Y) + b * (c2.Y - c1.Y) + c * (end.Y - c2.Y);
-            double z = a * (c1.Z - start.Z) + b * (c2.Z - c1.Z) + c * (end.Z - c2.Z);
-
-            return new Vector3d(x, y, z);
-        }
-
-        #endregion
-
         #region Operators
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -293,11 +222,14 @@ namespace Sakura.MathLib
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3d operator /(Vector3d v, double scalar)
-            => new Vector3d(v.X / scalar, v.Y / scalar, v.Z / scalar);
+        {
+            double oos = 1.0 / scalar;
+            return new Vector3d(v.X * oos, v.Y * oos, v.Z * oos);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector3d operator -(Vector3d value)
-            => new Vector3d(-value.X, -value.Y, -value.Z);
+        public static Vector3d operator -(Vector3d v)
+            => new Vector3d(-v.X, -v.Y, -v.Z);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Vector3d a, Vector3d b)

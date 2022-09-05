@@ -84,11 +84,16 @@ namespace Sakura.MathLib
         public override int GetHashCode()
             => unchecked(Y * 65599 + X);
 
-		#endregion
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool NearlyEquals(Vector2i other, int epsilon = 1)
+            => Math.Abs(X - other.X) <= epsilon
+                && Math.Abs(Y - other.Y) <= epsilon;
 
-		#region Methods
+        #endregion
 
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        #region Methods
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Dot(Vector2i v)
             => X * v.X + Y * v.Y;
 
@@ -175,8 +180,8 @@ namespace Sakura.MathLib
             => new Vector2i(v.X / scalar, v.Y / scalar);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2i operator -(Vector2i value)
-            => new Vector2i(-value.X, -value.Y);
+        public static Vector2i operator -(Vector2i v)
+            => new Vector2i(-v.X, -v.Y);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Vector2i a, Vector2i b)
