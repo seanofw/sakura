@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DockPanelSuite" Version="3.1.0" />
+    <PackageReference Include="DockPanelSuite.ThemeVS2015" Version="3.1.0" />
+    <PackageReference Include="SkiaSharp" Version="2.88.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sakura.BetterControls\Sakura.BetterControls.csproj" />
+    <ProjectReference Include="..\Sakura.Img\Sakura.Img.csproj" />
+    <ProjectReference Include="..\Sakura.MathLib\Sakura.MathLib.csproj" />
+  </ItemGroup>
+
+</Project>
