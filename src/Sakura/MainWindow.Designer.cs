@@ -54,6 +54,8 @@
 			this.Edit_FindAndReplace = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolsMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tools_Options = new System.Windows.Forms.ToolStripMenuItem();
+			this.PanelsMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_ObjectManager = new System.Windows.Forms.ToolStripMenuItem();
 			this.WindowMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.Window_CloseAllDocuments = new System.Windows.Forms.ToolStripMenuItem();
 			this.Window_CloseAllButThis = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,8 +76,9 @@
             this.FileMenu,
             this.EditMenu,
             this.ToolsMenu,
-            this.WindowMenu,
-            this.HelpMenu});
+			this.PanelsMenu,
+			this.WindowMenu,
+			this.HelpMenu});
 			this.MainMenu.Location = new System.Drawing.Point(0, 0);
 			this.MainMenu.MdiWindowListItem = this.WindowMenu;
 			this.MainMenu.Name = "MainMenu";
@@ -288,6 +291,21 @@
 			this.Tools_Options.Size = new System.Drawing.Size(125, 22);
 			this.Tools_Options.Text = "&Options...";
 			// 
+			// PanelsMenu
+			// 
+			this.PanelsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.Panels_ObjectManager});
+			this.PanelsMenu.Name = "PanelsMenu";
+			this.PanelsMenu.Size = new System.Drawing.Size(37, 20);
+			this.PanelsMenu.Text = "&Panels";
+			// 
+			// Panels_ObjectManager
+			// 
+			this.Panels_ObjectManager.Name = "Panels_ObjectManager";
+			this.Panels_ObjectManager.Size = new System.Drawing.Size(181, 22);
+			this.Panels_ObjectManager.Text = "&Object Manager";
+			this.Panels_ObjectManager.Click += new System.EventHandler(this.Panels_ObjectManager_Click);
+			// 
 			// WindowMenu
 			// 
 			this.WindowMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -415,15 +433,16 @@
         private System.Windows.Forms.ToolStripMenuItem Edit_FindAndReplace;
         private System.Windows.Forms.ToolStripMenuItem ToolsMenu;
         private System.Windows.Forms.ToolStripMenuItem Tools_Options;
-        private System.Windows.Forms.ToolStripMenuItem HelpMenu;
-        private System.Windows.Forms.ToolStripMenuItem Help_AboutSakura;
-        private System.Windows.Forms.ToolStripMenuItem WindowMenu;
+		private System.Windows.Forms.ToolStripMenuItem PanelsMenu;
+		private System.Windows.Forms.ToolStripMenuItem Panels_ObjectManager;
+		private System.Windows.Forms.ToolStripMenuItem WindowMenu;
         private System.Windows.Forms.ToolStripMenuItem Window_CloseAllDocuments;
         private System.Windows.Forms.ToolStripMenuItem Window_CloseAllButThis;
         private System.Windows.Forms.ToolStripSeparator Window_ListSeparator;
-        private System.Windows.Forms.StatusStrip MainStatusStrip;
+		private System.Windows.Forms.ToolStripMenuItem HelpMenu;
+		private System.Windows.Forms.ToolStripMenuItem Help_AboutSakura;
+		private System.Windows.Forms.StatusStrip MainStatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel MainStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel ZoomStatusLabel;
-        private WeifenLuo.WinFormsUI.Docking.DockPanel DockPanel;
-    }
+	}
 }

@@ -10,6 +10,10 @@ namespace Sakura.Commands
 		public Command WindowCloseAll { get; set; } = null!;
 		public Command WindowCloseAllButThis { get; set; } = null!;
 
+		public Command ObjectManagerToggle { get; set; } = null!;
+		public Command ObjectManagerShow { get; set; } = null!;
+		public Command ObjectManagerHide { get; set; } = null!;
+
 		public Command HelpAbout { get; set; } = null!;
 
 		public Command? ByName(string name)

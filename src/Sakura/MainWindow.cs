@@ -3,6 +3,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using Sakura.BetterControls.MessageBox;
 using Sakura.BetterControls.Themes;
 using Sakura.Commands;
+using Sakura.Panels;
 
 namespace Sakura
 {
@@ -11,6 +12,8 @@ namespace Sakura
 		private readonly VS2015LightTheme _vs2015LightTheme = new VS2015LightTheme();
 		private readonly VS2015DarkTheme _vs2015DarkTheme = new VS2015DarkTheme();
 		private readonly VS2015BlueTheme _vs2015BlueTheme = new VS2015BlueTheme();
+
+		public DockPanel DockPanel { get; private set; }
 
 		public DockContent? ActiveDocument =>
 			(DockPanel.ActiveDocument is DockContent dockContent) ? dockContent : null;
@@ -32,6 +35,10 @@ namespace Sakura
 
 		public MainWindow()
 		{
+			_vs2015LightTheme.Measures.DockPadding = 0;
+			_vs2015DarkTheme.Measures.DockPadding = 0;
+			_vs2015BlueTheme.Measures.DockPadding = 0;
+
 			InitializeComponent();
 
 			CommandTable = new CommandTable();
@@ -39,26 +46,21 @@ namespace Sakura
 
 			ApplyTheme();
 
-			DockPanel.Dock = DockStyle.Fill;
+			DockPanel!.Dock = DockStyle.Fill;
 			DockPanel.ActiveDocumentChanged += OnActiveDocumentChanged;
+
+			OpenObjectManager();
 		}
 
 		#region Window management
 
-		private void OnContentClosing(object? sender, FormClosingEventArgs e)
+		public void OnContentClosing(object? sender, FormClosingEventArgs e)
 		{
-			if (sender is DockContent content)
-			{
-				// ...
-			}
 		}
 
-		private void OnContentClosed(object? sender, FormClosedEventArgs e)
+		public void OnContentClosed(object? sender, FormClosedEventArgs e)
 		{
-			if (sender is DockContent content)
-			{
-				UpdateWindowMenu();
-			}
+			UpdateWindowMenu();
 		}
 
 		public void CloseAll()
@@ -118,6 +120,18 @@ namespace Sakura
 
 		#endregion
 
+		#region Panels
+
+		public ObjectManager? ObjectManager { get; set; }
+
+		private void OpenObjectManager()
+		{
+			if (ObjectManager == null)
+				new ObjectManager(this, p => ObjectManager = p, Panels_ObjectManager);
+		}
+
+		#endregion
+
 		#region Theming support
 
 		private readonly VisualStudioToolStripExtender _toolStripExtender = new VisualStudioToolStripExtender
@@ -169,7 +183,7 @@ namespace Sakura
 		{
 			commandTable.FileNew = new Command("FileNew", m =>
 			{
-				DockContent newContent = new DockContent();
+				DocumentWindow newContent = new DocumentWindow();
 				newContent.Text = "New Drawing " + (_newDocumentNumber++);
 				newContent.Dock = DockStyle.Fill;
 				newContent.DockAreas = DockAreas.Document | DockAreas.Float;
@@ -195,6 +209,14 @@ namespace Sakura
 			commandTable.WindowCloseAll = new Command("WindowCloseAll", m => m.CloseAll());
 			commandTable.WindowCloseAllButThis = new Command("WindowCloseAllButThis", m => m.CloseAllButThis());
 
+			commandTable.ObjectManagerToggle = new Command("ObjectManagerToggle", m =>
+			{
+				if (ObjectManager != null) ObjectManager.Close();
+				else OpenObjectManager();
+			});
+			commandTable.ObjectManagerShow = new Command("ObjectManagerShow", m => OpenObjectManager());
+			commandTable.ObjectManagerHide = new Command("ObjectManagerHide", m => ObjectManager?.Close());
+
 			commandTable.HelpAbout = new Command("HelpAbout", m => m.ShowAboutDialog());
 		}
 
@@ -206,6 +228,8 @@ namespace Sakura
 
 		private void Window_CloseAll_Click(object sender, EventArgs e) => CommandTable.WindowCloseAll.Invoke(this);
 		private void Window_CloseAllButThis_Click(object sender, EventArgs e) => CommandTable.WindowCloseAllButThis.Invoke(this);
+
+		private void Panels_ObjectManager_Click(object sender, EventArgs e) => CommandTable.ObjectManagerToggle.Invoke(this);
 
 		private void Help_About_Click(object sender, EventArgs e) => CommandTable.HelpAbout.Invoke(this);
 
