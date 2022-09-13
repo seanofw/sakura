@@ -33,6 +33,8 @@ namespace Sakura.Rendering
 		public Matrix3x2d ScreenToWorldMatrix => _screenToWorldMatrix ??= WorldToScreenMatrix.Invert();
 		private Matrix3x2d? _screenToWorldMatrix;
 
+		public static Camera Default { get; } = new Camera();
+
 		/// <summary>
 		/// Create a new camera.
 		/// </summary>

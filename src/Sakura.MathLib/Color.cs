@@ -357,6 +357,30 @@ namespace Sakura.MathLib
 		}
 
 		/// <summary>
+		/// Perform additive blend of this color over top of another "surface" color
+		/// (i.e., this is a "compositing" operation, not just mixing colors).
+		/// Neither color should use premultiplied alpha.
+		/// </summary>
+		/// <param name="surface">The surface color to apply this color on top of.
+		/// This surface color may have any valid alpha value.</param>
+		[MethodImpl(MethodImplOptions.AggressiveOptimization)]
+		public Color Blend(Color surface)
+		{
+			const int divisor = 255 * 255 * 2;
+			const int half = divisor / 2;
+
+			int oa = A * 255 * 2;
+			int sa = (255 - oa) * surface.A * 2;
+
+			byte r = (byte)((R * oa + surface.R * sa + half) / divisor);
+			byte g = (byte)((G * oa + surface.G * sa + half) / divisor);
+			byte b = (byte)((B * oa + surface.B * sa + half) / divisor);
+			byte a = (byte)((oa + sa + 255) / (255 * 2));
+
+			return new Color(r, g, b, a);
+		}
+
+		/// <summary>
 		/// Transform a color that uses non-premultipled alpha to one that contains premultiplied alpha.
 		/// Note that this is a lossy transformation:  Unpremultiply(Premultiply(x)) will result in a
 		/// *similar* color, but not the *same* color as the original.
@@ -414,6 +438,26 @@ namespace Sakura.MathLib
 		[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
 		private static int Div255(int x)
 			=> (x + 1 + (x >> 8)) >> 8;
+
+		/// <summary>
+		/// Generate a weighted grayscale color, taking into account the relative apparent
+		/// brightness of each color component:  0.299 * R + 0.587 * G + 0.114 * B
+		/// </summary>
+		public Color Grayscale()
+		{
+			byte g = (byte)((R * 77 + G * 151 + B * 28) >> 8);
+			return new Color(g, g, g, A);
+		}
+
+		/// <summary>
+		/// Generate an unweighted grayscale color, giving each color component equal value.
+		/// You usually don't want this, unless you do.
+		/// </summary>
+		public Color UnweightedGrayscale()
+		{
+			byte g = (byte)((R * 2 + G * 2 + B * 2 + 3) / 6);
+			return new Color(g, g, g, A);
+		}
 
 		#endregion
 
@@ -650,7 +694,7 @@ namespace Sakura.MathLib
 		public static readonly Color Salmon = new Color((byte)250, (byte)128, (byte)114, (byte)255);
 		public static readonly Color SandyBrown = new Color((byte)244, (byte)164, (byte)96, (byte)255);
 		public static readonly Color SeaGreen = new Color((byte)46, (byte)139, (byte)87, (byte)255);
-		public static readonly Color Seashel = new Color((byte)255, (byte)245, (byte)238, (byte)255);
+		public static readonly Color Seashell = new Color((byte)255, (byte)245, (byte)238, (byte)255);
 		public static readonly Color Sienna = new Color((byte)160, (byte)82, (byte)45, (byte)255);
 		public static readonly Color Silver = new Color((byte)192, (byte)192, (byte)192, (byte)255);
 		public static readonly Color SkyBlue = new Color((byte)135, (byte)206, (byte)235, (byte)255);
@@ -806,7 +850,7 @@ namespace Sakura.MathLib
 			("salmon", Salmon),
 			("sandybrown", SandyBrown),
 			("seagreen", SeaGreen),
-			("seashel", Seashel),
+			("seashell", Seashell),
 			("sienna", Sienna),
 			("silver", Silver),
 			("skyblue", SkyBlue),
@@ -828,35 +872,23 @@ namespace Sakura.MathLib
 			("yellowgreen", YellowGreen),
 		};
 
-		/// <summary>
-		/// The list of colors above, turned into a dictionary keyed by name.
-		/// </summary>
-		private static readonly IReadOnlyDictionary<string, Color> _colorsByName = (
-			(Func<IReadOnlyDictionary<string, Color>>)(() =>
+		static Color()
+		{
+			Dictionary<string, Color> colorsByName = new Dictionary<string, Color>();
+			foreach ((string Name, Color Color) pair in _colorList)
 			{
-				// Fanciness to project the color list to a dictionary, without taking a dependency on Linq.
-				Dictionary<string, Color> colorsByName = new Dictionary<string, Color>();
-				foreach ((string Name, Color Color) pair in _colorList)
-				{
-					colorsByName.Add(pair.Name, pair.Color);
-				}
-				return colorsByName;
-			}))();
+				colorsByName.Add(pair.Name, pair.Color);
+			}
+			ColorsByName = colorsByName;
 
-		/// <summary>
-		/// The list of colors above, turned into a dictionary keyed by color.
-		/// </summary>
-		private static readonly IReadOnlyDictionary<Color, string> _namesByColor = (
-			(Func<IReadOnlyDictionary<Color, string>>)(() =>
+			Dictionary<Color, string> namesByColor = new Dictionary<Color, string>();
+			foreach ((string Name, Color Color) pair in _colorList)
 			{
-				// Fanciness to project the color list to a dictionary, without taking a dependency on Linq.
-				Dictionary<Color, string> namesByColor = new Dictionary<Color, string>();
-				foreach ((string Name, Color Color) pair in _colorList)
-				{
+				if (!namesByColor.ContainsKey(pair.Color))
 					namesByColor.Add(pair.Color, pair.Name);
-				}
-				return namesByColor;
-			}))();
+			}
+			NamesByColor = namesByColor;
+		}
 
 		/// <summary>
 		/// Retrieve the full list of defined colors, in their definition order.
@@ -866,12 +898,12 @@ namespace Sakura.MathLib
 		/// <summary>
 		/// A dictionary that maps color values to their matching names, in lowercase.
 		/// </summary>
-		public static IReadOnlyDictionary<Color, string> NamesByColor => _namesByColor;
+		public static IReadOnlyDictionary<Color, string> NamesByColor { get; }
 
 		/// <summary>
 		/// A dictionary that maps color names to their matching color values.
 		/// </summary>
-		public static IReadOnlyDictionary<string, Color> ColorsByName => _colorsByName;
+		public static IReadOnlyDictionary<string, Color> ColorsByName { get; }
 
 		#endregion
 

@@ -13,8 +13,12 @@ namespace Sakura
 		private BetterHorizontalScrollbar HorizontalScrollbar = null!;
 		private BetterVerticalScrollbar VerticalScrollbar = null!;
 
-		public DocumentWindow()
+		protected MainWindow MainWindow { get; }
+
+		public DocumentWindow(MainWindow mainWindow)
 		{
+			MainWindow = mainWindow;
+
 			InitializeComponent();
 
 			HorizontalScrollbar.Start = 10;
@@ -34,7 +38,7 @@ namespace Sakura
 
 		private void InitializeComponent()
 		{
-			VectorSurface = new VectorSurface();
+			VectorSurface = new VectorSurface(MainWindow);
 			HorizontalScrollbar = new BetterHorizontalScrollbar();
 			VerticalScrollbar = new BetterVerticalScrollbar();
 			HorizontalScrollbar.ScrollbarStyle = (

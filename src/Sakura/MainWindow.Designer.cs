@@ -33,6 +33,7 @@
 			this.File_New = new System.Windows.Forms.ToolStripMenuItem();
 			this.File_Open = new System.Windows.Forms.ToolStripMenuItem();
 			this.File_Save = new System.Windows.Forms.ToolStripMenuItem();
+			this.File_SaveAll = new System.Windows.Forms.ToolStripMenuItem();
 			this.File_SaveAs = new System.Windows.Forms.ToolStripMenuItem();
 			this.File_Close = new System.Windows.Forms.ToolStripMenuItem();
 			this.File_Sep1 = new System.Windows.Forms.ToolStripSeparator();
@@ -55,7 +56,16 @@
 			this.ToolsMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.Tools_Options = new System.Windows.Forms.ToolStripMenuItem();
 			this.PanelsMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_ToolboxMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Toolbox_Left = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Toolbox_Right = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Toolbox_Top = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Toolbox_Bottom = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Toolbox_Sep1 = new System.Windows.Forms.ToolStripSeparator();
+			this.Panels_Toolbox_Hidden = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Sep1 = new System.Windows.Forms.ToolStripSeparator();
 			this.Panels_ObjectManager = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_ColorPanel = new System.Windows.Forms.ToolStripMenuItem();
 			this.WindowMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.Window_CloseAllDocuments = new System.Windows.Forms.ToolStripMenuItem();
 			this.Window_CloseAllButThis = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +76,13 @@
 			this.MainStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.ZoomStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.DockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+			this.Toolbox = new Sakura.Tools.Toolbox();
+			this.Panels_Toolbox_Sep2 = new System.Windows.Forms.ToolStripSeparator();
+			this.Panels_Toolbox_XSmall = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Toolbox_Small = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Toolbox_Medium = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Toolbox_Large = new System.Windows.Forms.ToolStripMenuItem();
+			this.Panels_Toolbox_XLarge = new System.Windows.Forms.ToolStripMenuItem();
 			this.MainMenu.SuspendLayout();
 			this.MainStatusStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -76,9 +93,9 @@
             this.FileMenu,
             this.EditMenu,
             this.ToolsMenu,
-			this.PanelsMenu,
-			this.WindowMenu,
-			this.HelpMenu});
+            this.PanelsMenu,
+            this.WindowMenu,
+            this.HelpMenu});
 			this.MainMenu.Location = new System.Drawing.Point(0, 0);
 			this.MainMenu.MdiWindowListItem = this.WindowMenu;
 			this.MainMenu.Name = "MainMenu";
@@ -92,7 +109,8 @@
             this.File_New,
             this.File_Open,
             this.File_Save,
-            this.File_SaveAs,
+			this.File_SaveAll,
+			this.File_SaveAs,
             this.File_Close,
             this.File_Sep1,
             this.File_Exit});
@@ -125,6 +143,14 @@
 			this.File_Save.Size = new System.Drawing.Size(195, 22);
 			this.File_Save.Text = "&Save";
 			// 
+			// File_SaveAll
+			// 
+			this.File_SaveAll.Name = "File_SaveAll";
+			this.File_SaveAll.ShortcutKeyDisplayString = "";
+			this.File_SaveAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+			this.File_SaveAll.Size = new System.Drawing.Size(195, 22);
+			this.File_SaveAll.Text = "S&ave all";
+			// 
 			// File_SaveAs
 			// 
 			this.File_SaveAs.Name = "File_SaveAs";
@@ -132,7 +158,7 @@
 			this.File_SaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
 			this.File_SaveAs.Size = new System.Drawing.Size(195, 22);
-			this.File_SaveAs.Text = "&Save as...";
+			this.File_SaveAs.Text = "Save as...";
 			// 
 			// File_Close
 			// 
@@ -294,17 +320,91 @@
 			// PanelsMenu
 			// 
 			this.PanelsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.Panels_ObjectManager});
+            this.Panels_ToolboxMenu,
+            this.Panels_Sep1,
+            this.Panels_ObjectManager,
+            this.Panels_ColorPanel});
 			this.PanelsMenu.Name = "PanelsMenu";
-			this.PanelsMenu.Size = new System.Drawing.Size(37, 20);
+			this.PanelsMenu.Size = new System.Drawing.Size(53, 20);
 			this.PanelsMenu.Text = "&Panels";
+			// 
+			// Panels_ToolboxMenu
+			// 
+			this.Panels_ToolboxMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Panels_Toolbox_Left,
+            this.Panels_Toolbox_Right,
+            this.Panels_Toolbox_Top,
+            this.Panels_Toolbox_Bottom,
+            this.Panels_Toolbox_Sep1,
+            this.Panels_Toolbox_Hidden,
+            this.Panels_Toolbox_Sep2,
+            this.Panels_Toolbox_XSmall,
+            this.Panels_Toolbox_Small,
+            this.Panels_Toolbox_Medium,
+            this.Panels_Toolbox_Large,
+            this.Panels_Toolbox_XLarge});
+			this.Panels_ToolboxMenu.Name = "Panels_ToolboxMenu";
+			this.Panels_ToolboxMenu.Size = new System.Drawing.Size(180, 22);
+			this.Panels_ToolboxMenu.Text = "&Toolbox";
+			// 
+			// Panels_Toolbox_Left
+			// 
+			this.Panels_Toolbox_Left.Name = "Panels_Toolbox_Left";
+			this.Panels_Toolbox_Left.Size = new System.Drawing.Size(132, 22);
+			this.Panels_Toolbox_Left.Text = "&Left";
+			this.Panels_Toolbox_Left.Click += new System.EventHandler(this.Panels_Toolbox_Left_Click);
+			// 
+			// Panels_Toolbox_Right
+			// 
+			this.Panels_Toolbox_Right.Name = "Panels_Toolbox_Right";
+			this.Panels_Toolbox_Right.Size = new System.Drawing.Size(132, 22);
+			this.Panels_Toolbox_Right.Text = "&Right";
+			this.Panels_Toolbox_Right.Click += new System.EventHandler(this.Panels_Toolbox_Right_Click);
+			// 
+			// Panels_Toolbox_Top
+			// 
+			this.Panels_Toolbox_Top.Name = "Panels_Toolbox_Top";
+			this.Panels_Toolbox_Top.Size = new System.Drawing.Size(132, 22);
+			this.Panels_Toolbox_Top.Text = "&Top";
+			this.Panels_Toolbox_Top.Click += new System.EventHandler(this.Panels_Toolbox_Top_Click);
+			// 
+			// Panels_Toolbox_Bottom
+			// 
+			this.Panels_Toolbox_Bottom.Name = "Panels_Toolbox_Bottom";
+			this.Panels_Toolbox_Bottom.Size = new System.Drawing.Size(132, 22);
+			this.Panels_Toolbox_Bottom.Text = "&Bottom";
+			this.Panels_Toolbox_Bottom.Click += new System.EventHandler(this.Panels_Toolbox_Bottom_Click);
+			// 
+			// Panels_Toolbox_Sep1
+			// 
+			this.Panels_Toolbox_Sep1.Name = "Panels_Toolbox_Sep1";
+			this.Panels_Toolbox_Sep1.Size = new System.Drawing.Size(129, 6);
+			// 
+			// Panels_Toolbox_Hidden
+			// 
+			this.Panels_Toolbox_Hidden.Name = "Panels_Toolbox_Hidden";
+			this.Panels_Toolbox_Hidden.Size = new System.Drawing.Size(132, 22);
+			this.Panels_Toolbox_Hidden.Text = "&Hidden";
+			this.Panels_Toolbox_Hidden.Click += new System.EventHandler(this.Panels_Toolbox_Hidden_Click);
+			// 
+			// Panels_Sep1
+			// 
+			this.Panels_Sep1.Name = "Panels_Sep1";
+			this.Panels_Sep1.Size = new System.Drawing.Size(177, 6);
 			// 
 			// Panels_ObjectManager
 			// 
 			this.Panels_ObjectManager.Name = "Panels_ObjectManager";
-			this.Panels_ObjectManager.Size = new System.Drawing.Size(181, 22);
+			this.Panels_ObjectManager.Size = new System.Drawing.Size(180, 22);
 			this.Panels_ObjectManager.Text = "&Object Manager";
 			this.Panels_ObjectManager.Click += new System.EventHandler(this.Panels_ObjectManager_Click);
+			// 
+			// Panels_ColorPanel
+			// 
+			this.Panels_ColorPanel.Name = "Panels_ColorPanel";
+			this.Panels_ColorPanel.Size = new System.Drawing.Size(180, 22);
+			this.Panels_ColorPanel.Text = "&Colors";
+			this.Panels_ColorPanel.Click += new System.EventHandler(this.Panels_ColorPanel_Click);
 			// 
 			// WindowMenu
 			// 
@@ -355,7 +455,7 @@
 			this.MainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MainStatusLabel,
             this.ZoomStatusLabel});
-			this.MainStatusStrip.Location = new System.Drawing.Point(0, 587);
+			this.MainStatusStrip.Location = new System.Drawing.Point(0, 637);
 			this.MainStatusStrip.Name = "MainStatusStrip";
 			this.MainStatusStrip.Size = new System.Drawing.Size(984, 24);
 			this.MainStatusStrip.TabIndex = 1;
@@ -378,24 +478,74 @@
 			// 
 			// DockPanel
 			// 
-			this.DockPanel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-			this.DockPanel.Location = new System.Drawing.Point(0, 27);
+			this.DockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.DockPanel.Location = new System.Drawing.Point(0, 0);
 			this.DockPanel.Name = "DockPanel";
-			this.DockPanel.Size = new System.Drawing.Size(984, 557);
-			this.DockPanel.TabIndex = 10;
+			this.DockPanel.Size = new System.Drawing.Size(984, 661);
+			this.DockPanel.TabIndex = 12;
+			// 
+			// Toolbox
+			// 
+			this.Toolbox.Dock = System.Windows.Forms.DockStyle.Left;
+			this.Toolbox.Location = new System.Drawing.Point(0, 24);
+			this.Toolbox.Name = "Toolbox";
+			this.Toolbox.Size = new System.Drawing.Size(56, 613);
+			this.Toolbox.TabIndex = 11;
+			this.Toolbox.ToolboxOrientation = Sakura.Tools.ToolboxOrientation.Left;
+			// 
+			// Panels_Toolbox_Sep2
+			// 
+			this.Panels_Toolbox_Sep2.Name = "Panels_Toolbox_Sep2";
+			this.Panels_Toolbox_Sep2.Size = new System.Drawing.Size(129, 6);
+			// 
+			// Panels_Toolbox_XSmall
+			// 
+			this.Panels_Toolbox_XSmall.Name = "Panels_Toolbox_XSmall";
+			this.Panels_Toolbox_XSmall.Size = new System.Drawing.Size(180, 22);
+			this.Panels_Toolbox_XSmall.Text = "Extra Small";
+			this.Panels_Toolbox_XSmall.Click += new System.EventHandler(this.Panels_Toolbox_XSmall_Click);
+			// 
+			// Panels_Toolbox_Small
+			// 
+			this.Panels_Toolbox_Small.Name = "Panels_Toolbox_Small";
+			this.Panels_Toolbox_Small.Size = new System.Drawing.Size(180, 22);
+			this.Panels_Toolbox_Small.Text = "&Small";
+			this.Panels_Toolbox_Small.Click += new System.EventHandler(this.Panels_Toolbox_Small_Click);
+			// 
+			// Panels_Toolbox_Medium
+			// 
+			this.Panels_Toolbox_Medium.Name = "Panels_Toolbox_Medium";
+			this.Panels_Toolbox_Medium.Size = new System.Drawing.Size(180, 22);
+			this.Panels_Toolbox_Medium.Text = "&Medium";
+			this.Panels_Toolbox_Medium.Click += new System.EventHandler(this.Panels_Toolbox_Medium_Click);
+			// 
+			// Panels_Toolbox_Large
+			// 
+			this.Panels_Toolbox_Large.Name = "Panels_Toolbox_Large";
+			this.Panels_Toolbox_Large.Size = new System.Drawing.Size(180, 22);
+			this.Panels_Toolbox_Large.Text = "&Large";
+			this.Panels_Toolbox_Large.Click += new System.EventHandler(this.Panels_Toolbox_Large_Click);
+			// 
+			// Panels_Toolbox_XLarge
+			// 
+			this.Panels_Toolbox_XLarge.Name = "Panels_Toolbox_XLarge";
+			this.Panels_Toolbox_XLarge.Size = new System.Drawing.Size(180, 22);
+			this.Panels_Toolbox_XLarge.Text = "E&xtra Large";
+			this.Panels_Toolbox_XLarge.Click += new System.EventHandler(this.Panels_Toolbox_XLarge_Click);
 			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(984, 611);
-			this.Controls.Add(this.DockPanel);
+			this.ClientSize = new System.Drawing.Size(984, 661);
+			this.Controls.Add(this.Toolbox);
 			this.Controls.Add(this.MainMenu);
 			this.Controls.Add(this.MainStatusStrip);
+			this.Controls.Add(this.DockPanel);
 			this.IsMdiContainer = true;
 			this.MainMenuStrip = this.MainMenu;
 			this.Name = "MainWindow";
-			this.Text = "Sakura";
+			this.Text = "Sakura Studio";
 			this.MainMenu.ResumeLayout(false);
 			this.MainMenu.PerformLayout();
 			this.MainStatusStrip.ResumeLayout(false);
@@ -412,7 +562,8 @@
         private System.Windows.Forms.ToolStripMenuItem File_New;
         private System.Windows.Forms.ToolStripMenuItem File_Open;
         private System.Windows.Forms.ToolStripMenuItem File_Save;
-        private System.Windows.Forms.ToolStripMenuItem File_SaveAs;
+		private System.Windows.Forms.ToolStripMenuItem File_SaveAll;
+		private System.Windows.Forms.ToolStripMenuItem File_SaveAs;
         private System.Windows.Forms.ToolStripMenuItem File_Close;
         private System.Windows.Forms.ToolStripSeparator File_Sep1;
         private System.Windows.Forms.ToolStripMenuItem File_Exit;
@@ -434,7 +585,16 @@
         private System.Windows.Forms.ToolStripMenuItem ToolsMenu;
         private System.Windows.Forms.ToolStripMenuItem Tools_Options;
 		private System.Windows.Forms.ToolStripMenuItem PanelsMenu;
+		private System.Windows.Forms.ToolStripSeparator Panels_Sep1;
+		private System.Windows.Forms.ToolStripMenuItem Panels_ToolboxMenu;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_Left;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_Right;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_Top;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_Bottom;
+		private System.Windows.Forms.ToolStripSeparator Panels_Toolbox_Sep1;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_Hidden;
 		private System.Windows.Forms.ToolStripMenuItem Panels_ObjectManager;
+		private System.Windows.Forms.ToolStripMenuItem Panels_ColorPanel;
 		private System.Windows.Forms.ToolStripMenuItem WindowMenu;
         private System.Windows.Forms.ToolStripMenuItem Window_CloseAllDocuments;
         private System.Windows.Forms.ToolStripMenuItem Window_CloseAllButThis;
@@ -444,5 +604,13 @@
 		private System.Windows.Forms.StatusStrip MainStatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel MainStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel ZoomStatusLabel;
+		private Sakura.Tools.Toolbox Toolbox;
+		private WeifenLuo.WinFormsUI.Docking.DockPanel DockPanel;
+		private System.Windows.Forms.ToolStripSeparator Panels_Toolbox_Sep2;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_XSmall;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_Small;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_Medium;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_Large;
+		private System.Windows.Forms.ToolStripMenuItem Panels_Toolbox_XLarge;
 	}
 }

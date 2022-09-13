@@ -2286,7 +2286,7 @@ namespace Sakura.Img
 		/// Remap each color by passing it through the given matrix transform.
 		/// </summary>
 		/// <param name="matrix">The matrix to multiply each color vector by.</param>
-		public void RemapMatrix(Matrix4x4 matrix)
+		public void RemapMatrix(Matrix4x4f matrix)
 		{
 			unsafe
 			{
@@ -2298,8 +2298,8 @@ namespace Sakura.Img
 					while (ptr < end)
 					{
 						Color src = *ptr;
-						Vector3 v = new Vector3(src.R * (1 / 255f), src.G * (1 / 255f), src.B * (1 / 255f));
-						v = Vector3.Transform(v, matrix);
+						Vector3f v = new Vector3f(src.R * (1 / 255f), src.G * (1 / 255f), src.B * (1 / 255f));
+						v = matrix * v;
 						Color result = new Color((int)(v.X * 255 + 0.5f), (int)(v.Y * 255 + 0.5f), (int)(v.Z * 255 + 0.5f), src.A);
 						*ptr++ = result;
 					}

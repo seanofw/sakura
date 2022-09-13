@@ -1,0 +1,267 @@
+﻿{
+	"Groups": [
+		{
+			"Icon": "Diamond",
+			"Kind": "AutoPopulate",
+			"Title": "Frequently Used Tools"
+		},
+		{
+			"Icon": "File_Open",
+			"Title": "File Management",
+			"Tools": [
+				"File_New",
+				"Separator",
+
+				"File_Open",
+				"File_Save",
+				"Separator",
+
+				"File_Print",
+				"Separator",
+
+				"File_Export",
+				"File_Import"
+			]
+		},
+		{
+			"Icon": "Camera_Zoom",
+			"Title": "Page and Camera",
+			"Tools": [
+				"Camera_Zoom",
+				"Separator",
+
+				"Camera_ZoomIn",
+				"Camera_ZoomOut",
+				"Camera_Zoom100",
+				"Camera_ZoomFit",
+				"Separator",
+
+				"Camera_Pan",
+				"Camera_Rotate",
+				"Separator",
+
+				"Camera_ToggleRuler",
+				"Camera_ToggleScrollbar",
+				"Camera_ToggleGrid",
+				"Camera_ToggleGridSnap",
+				"Separator",
+
+				"Camera_RenderWireframe",
+				"Camera_RenderRough",
+				"Camera_RenderFinal"
+			]
+		},
+		{
+			"Icon": "Object_Select",
+			"Title": "Object Management",
+			"Tools": [
+				"Object_Select",
+				"Object_Lasso",
+				"Separator",
+
+				"Edit_Undo",
+				"Edit_Redo",
+				"Separator",
+
+				"Edit_Cut",
+				"Edit_Copy",
+				"Edit_Paste",
+				"Edit_Delete",
+				"Object_Duplicate",
+				"Object_Warp",
+				"Separator",
+
+				"Object_Forward",
+				"Object_Back",
+				"Separator",
+
+				"Object_InFrontOf",
+				"Object_Behind",
+				"Separator",
+
+				"Object_ToFront",
+				"Object_ToBack",
+				"Separator",
+
+				"Object_Group",
+				"Object_Ungroup",
+				"Separator",
+
+				"Object_Clip",
+				"Object_Unclip",
+				"Object_CreateClipper",
+				"Object_DeleteClipper",
+				"Separator",
+
+				"Node_ObjectToCurves"
+			]
+		},
+		{
+			"Icon": "Object_AlignLeft",
+			"Title": "Align & Distribute",
+			"Tools": [
+				"Object_Select",
+				"Object_Lasso",
+				"Separator",
+
+				"Object_Group",
+				"Object_Ungroup",
+				"Separator",
+
+				"Object_AlignLeft",
+				"Object_AlignHCenter",
+				"Object_AlignRight",
+				"Separator",
+
+				"Object_AlignTop",
+				"Object_AlignVCenter",
+				"Object_AlignBottom"
+			]
+		},
+		{
+			"Icon": "Node_Select",
+			"Title": "Node Editing",
+			"Tools": [
+				"Object_Select",
+				"Node_Select",
+				"Separator",
+
+				"Node_Eraser",
+				"Node_Crop",
+				"Node_Knife",
+				"Separator",
+
+				"Node_ToCurve",
+				"Node_ToLine",
+				"Separator",
+
+				"Node_Cusp",
+				"Node_Smooth",
+				"Node_Symmetric",
+				"Separator",
+
+				"Node_AllToCurve",
+				"Node_AllToLine",
+				"Separator",
+
+				"Node_AllCusp",
+				"Node_AllSmooth",
+				"Node_AllSymmetric",
+				"Separator",
+
+				"Node_Combine",
+				"Node_Separate"
+			]
+		},
+		{
+			"Icon": "Node_SubtractFront",
+			"Title": "Advanced Shaping",
+			"Tools": [
+				"Object_Select",
+				"Node_Select",
+				"Separator",
+
+				"Node_Eraser",
+				"Node_ToCurve",
+				"Node_ToLine",
+				"Node_Cusp",
+				"Node_Smooth",
+				"Separator",
+
+				"Node_Combine",
+				"Node_Separate",
+				"Separator",
+
+				"Node_Union",
+				"Node_Intersect",
+				"Node_SubtractFront",
+				"Node_SubtractBack",
+				"Node_Xor",
+				"Node_Boundary",
+				"Separator",
+
+				"Node_ContinueCurve",
+				"Node_MergeNodes",
+				"Node_DiceCurve",
+				"Node_SliceCurve",
+				"Node_SliceCurveAndTrim"
+			]
+		},
+		{
+			"Icon": "Draw_Freehand",
+			"Title": "Drawing Tools",
+			"Tools": [
+				"Object_Select",
+				"Object_Lasso",
+				"Node_Select",
+				"Node_Eraser",
+				"Separator",
+
+				"Draw_Freehand",
+				"Draw_Brush",
+				"Draw_Curve",
+				"Separator",
+
+				"Draw_Rectangle",
+				"Draw_Ellipse",
+				"Draw_Polygon",
+				"Draw_Star"
+			]
+		},
+		{
+			"Icon": "Style_Fill",
+			"Title": "Style Tools",
+			"Tools": [
+				"Object_Select",
+				"Object_Lasso",
+				"Separator",
+
+				"Style_Fill",
+				"Style_Stroke",
+				"Style_Dropper",
+				"Separator",
+
+				"Style_Transparency",
+				"Separator",
+
+				"Style_StartArrow",
+				"Style_EndArrow",
+				"Separator",
+
+				"Style_Weight0",
+				"Style_Weight1",
+				"Style_Weight2",
+				"Style_Weight4",
+				"Style_Weight8",
+				"Style_Weight16"
+			]
+		},
+		{
+			"Icon": "Text_Tool",
+			"Title": "Text Tools",
+			"Tools": [
+				"Object_Select",
+				"Object_Lasso",
+				"Separator",
+
+				"Text_Tool",
+				"Text_Paragraph",
+				"Separator",
+
+				"Text_LeftAlign",
+				"Text_RightAlign",
+				"Text_Center",
+				"Text_Justify",
+				"Text_JustifyAll",
+				"Separator",
+
+				"Text_Bold",
+				"Text_Italic",
+				"Text_Underline",
+				"Text_Strike",
+				"Text_Superscript",
+				"Text_Subscript"
+			]
+		}
+	]
+}

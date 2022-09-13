@@ -207,6 +207,12 @@ namespace Sakura.MathLib
 				m.M21 * v.X + m.M22 * v.Y + m.M23 * v.Z,
 				m.M31 * v.X + m.M32 * v.Y + m.M33 * v.Z);
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Vector2d operator *(in Matrix3x3d m, Vector2d v)
+			=> new Vector2d(
+				m.M11 * v.X + m.M12 * v.Y + m.M13,
+				m.M21 * v.X + m.M22 * v.Y + m.M23);
+
 		public static Matrix3x3d operator /(in Matrix3x3d m, double scalar)
 		{
 			double oos = 1.0f / scalar;

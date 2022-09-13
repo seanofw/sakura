@@ -1,4 +1,4 @@
-# Sakura Art Tool
+# Sakura Art Studio
 
 Copyright (C) 2022 Sean Werkema.  All rights reserved.
 

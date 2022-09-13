@@ -4,9 +4,11 @@
 	{
 		public int RootIndex { get; set; }
 		public Group Root => History[RootIndex];
-		public string Name { get; set; }
+		public string Name { get; set; } = "";
 
 		public List<Group> History { get; } = new List<Group> { new Group() };
+
+		public static Document Empty = new Document();
 
 		public void Do(Group group)
 		{

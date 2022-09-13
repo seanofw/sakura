@@ -43,15 +43,13 @@ namespace Sakura.Panels
 
 			InitializeComponent();
 
-			Show(mainWindow.DockPanel, defaultDockState);
+			Show(mainWindow.GetDockPanel(), defaultDockState);
 
 			ResumeLayout(false);
 			PerformLayout();
 		}
 
-		protected virtual void InitializeComponent()
-		{
-		}
+		protected abstract void InitializeComponent();
 
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{

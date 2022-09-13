@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Sakura": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

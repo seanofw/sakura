@@ -52,17 +52,19 @@ namespace Sakura.Rendering
 		}
 		private Camera _camera = new Camera();
 
-		private Bitmap? _bitmap;
+		public MainWindow MainWindow { get; }
+
 		private bool _paintedAtLeastOnce;
 
-		public Vector2i BitmapSize => _bitmapSize;
-		private Vector2i _bitmapSize;
+		private DeepBitmap _deepBitmap = new DeepBitmap();
 
 		public Vector2i Center => _center;
 		private Vector2i _center;
 
-		public VectorSurface()
+		public VectorSurface(MainWindow mainWindow)
 		{
+			MainWindow = mainWindow;
+
 			ResizeRedraw = true;
 			DoubleBuffered = true;
 
@@ -79,11 +81,7 @@ namespace Sakura.Rendering
 
 			if (disposing)
 			{
-				if (_bitmap != null)
-				{
-					_bitmap.Dispose();
-					_bitmap = null;
-				}
+				_deepBitmap.Dispose();
 			}
 		}
 
@@ -113,6 +111,45 @@ namespace Sakura.Rendering
 			Camera = Camera.WithZoom(Camera.Zoom * multiplier);
 		}
 
+		protected override void OnMouseEnter(EventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnMouseEnter(e);
+
+		protected override void OnMouseLeave(EventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnMouseLeave(e);
+
+		protected override void OnMouseMove(MouseEventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnMouseMove(e);
+
+		protected override void OnMouseDown(MouseEventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnMouseDown(e);
+
+		protected override void OnMouseUp(MouseEventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnMouseUp(e);
+
+		protected override void OnMouseClick(MouseEventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnMouseClick(e);
+
+		protected override void OnMouseDoubleClick(MouseEventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnMouseDoubleClick(e);
+
+		protected override void OnMouseCaptureChanged(EventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnMouseCaptureChanged(e);
+
+		protected override void OnKeyDown(KeyEventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnKeyDown(e);
+
+		protected override void OnKeyUp(KeyEventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnKeyUp(e);
+
+		protected override void OnKeyPress(KeyPressEventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnKeyPress(e);
+
+		protected override void OnGotFocus(EventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnGotFocus(e);
+
+		protected override void OnLostFocus(EventArgs e)
+			=> MainWindow.CurrentToolInfo?.ToolMechanics?.OnLostFocus(e);
+
 		private void RenderControl(Graphics graphics)
 		{
 			Rectangle containerRectangle = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
@@ -131,59 +168,39 @@ namespace Sakura.Rendering
 				return;
 			}
 
-			if (_bitmap != null)
+			graphics.Draw(_deepBitmap, new Vector2i(0, 0), new Vector2i(1, 1),
+				new Vector2i(ClientSize.Width - 2, ClientSize.Height - 2));
+		}
+
+		private unsafe void UpdateBitmap()
+		{
+			Vector2i size = new Vector2i(ClientSize.Width - 2, ClientSize.Height - 2);
+
+			_deepBitmap.Size = size;
+			_center = size / 2;
+
+			if (!DesignMode)
 			{
-				graphics.DrawImageUnscaled(_bitmap, new Point(1, 1));
+				Render();
 			}
 		}
 
-		private void UpdateBitmap()
+		public unsafe void Render()
 		{
-			Size size = new Size(ClientSize.Width - 2, ClientSize.Height - 2);
-
-			if (_bitmap != null)
-			{
-				_bitmap.Dispose();
-				_bitmap = null;
-			}
-
-			_bitmapSize = new Vector2i(size.Width, size.Height);
-			_center = _bitmapSize / 2;
-			_bitmap = DesignMode ? null : RenderToBitmap(_bitmapSize);
+			RenderToBitmap(new Vector2i(ClientSize.Width - 2, ClientSize.Height - 2), _deepBitmap);
 		}
 
-		private Bitmap? RenderToBitmap(Vector2i size)
+		private unsafe void RenderToBitmap(Vector2i size, DeepBitmap deepBitmap)
 		{
-			if (size.X <= 0 || size.Y <= 0) return null;
+			if (size.X <= 0 || size.Y <= 0) return;
 
-			Bitmap bitmap = new Bitmap(size.X, size.Y, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-			try
+			using (SKSurface surface = SKSurface.Create(new SKImageInfo(width: deepBitmap.Size.X, height: deepBitmap.Size.Y,
+					colorType: SKColorType.Rgba16161616, alphaType: SKAlphaType.Unpremul), (IntPtr)deepBitmap.GetData(), deepBitmap.NativeSize.X * 8))
 			{
-				System.Drawing.Imaging.BitmapData data = bitmap.LockBits(
-					new Rectangle(0, 0, size.X, size.Y),
-					System.Drawing.Imaging.ImageLockMode.WriteOnly, bitmap.PixelFormat);
-				try
+				using (SKCanvas canvas = surface.Canvas)
 				{
-					using (SKSurface surface = SKSurface.Create(new SKImageInfo(width: size.X, height: size.Y,
-						colorType: SKImageInfo.PlatformColorType, alphaType: SKAlphaType.Premul), data.Scan0, size.X * 4))
-					{
-						using (SKCanvas canvas = surface.Canvas)
-						{
-							RenderOnCanvas(size, canvas);
-						}
-					}
+					RenderOnCanvas(size, canvas);
 				}
-				finally
-				{
-					bitmap.UnlockBits(data);
-				}
-
-				return bitmap;
-			}
-			catch (Exception)
-			{
-				bitmap.Dispose();
-				throw;
 			}
 		}
 
@@ -193,13 +210,49 @@ namespace Sakura.Rendering
 
 			using (SKPaint paint = new SKPaint
 			{
-				Color = new SKColor(255, 224, 224),
+				Color = new SKColor(64, 96, 128),
 				StrokeWidth = 4,
-				IsAntialias = true,
+				IsAntialias = false,
 			})
 			{
 				canvas.DrawLine(new SKPoint(0, 0), new SKPoint(size.X, size.Y), paint);
+			}
+
+			using (SKPaint paint = new SKPaint
+			{
+				Color = new SKColor(255, 224, 192),
+				StrokeWidth = 4,
+				IsAntialias = false,
+			})
+			{
 				canvas.DrawLine(new SKPoint(size.X, 0), new SKPoint(0, size.Y), paint);
+			}
+
+			using (SKPaint paint = new SKPaint
+			{
+				Color = new SKColor(255, 0, 0, 128),
+				IsAntialias = false,
+			})
+			{
+				canvas.DrawRect(new SKRect(10, 10, 110, 110), paint);
+			}
+
+			using (SKPaint paint = new SKPaint
+			{
+				Color = new SKColor(0, 255, 0, 128),
+				IsAntialias = false,
+			})
+			{
+				canvas.DrawRect(new SKRect(50, 50, 150, 150), paint);
+			}
+
+			using (SKPaint paint = new SKPaint
+			{
+				Color = new SKColor(0, 0, 255, 128),
+				IsAntialias = false,
+			})
+			{
+				canvas.DrawRect(new SKRect(90, 90, 190, 190), paint);
 			}
 
 			//Document.Render(canvas, camera);
